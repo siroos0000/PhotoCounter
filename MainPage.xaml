@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:PhotoCounter"
+             x:Class="PhotoCounter.MainPage"
+             FlowDirection="RightToLeft"
+             BackgroundColor="#121212">
+
+    <ContentPage.Resources>
+        <Style x:Key="TopButton" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="#512BD4" />
+            <Setter Property="TextColor" Value="White" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="CornerRadius" Value="10" />
+            <Setter Property="Padding" Value="4,0" />
+            <Setter Property="HeightRequest" Value="44" />
+        </Style>
+        <Style x:Key="ToolButton" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="#2B2B2B" />
+            <Setter Property="TextColor" Value="White" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="CornerRadius" Value="10" />
+            <Setter Property="Padding" Value="0,4" />
+            <Setter Property="HeightRequest" Value="60" />
+        </Style>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto,*,Auto,Auto" RowSpacing="0">
+
+
+        <Grid Grid.Row="0"
+              Padding="10,8"
+              ColumnDefinitions="*,*,Auto"
+              ColumnSpacing="8"
+              BackgroundColor="#1C1C1C">
+            <Button Grid.Column="0"
+                    Text="📷  عکس‌گرفتن"
+                    Style="{StaticResource TopButton}"
+                    Clicked="OnTakePhotoClicked" />
+            <Button Grid.Column="1"
+                    Text="🖼  گالری"
+                    Style="{StaticResource TopButton}"
+                    Clicked="OnPickPhotoClicked" />
+            <Label Grid.Column="2"
+                   x:Name="CountLabel"
+                   Text="تعداد: 0"
+                   TextColor="White"
+                   FontSize="20"
+                   FontAttributes="Bold"
+                   VerticalOptions="Center"
+                   Margin="6,0" />
+        </Grid>
+
+        <!-- محل نمایش عکس -->
+        <Grid Grid.Row="1">
+            <local:CounterView x:Name="Counter" FlowDirection="LeftToRight" />
+            <Label x:Name="EmptyHint"
+                   Text="برای شروع عکس بگیرید یا یک تصویر از گالری انتخاب کنید.&#10;روی هر ناحیه بزنید تا شمرده و شماره‌گذاری شود.&#10;با دو انگشت زوم کنید."
+                   TextColor="#9E9E9E"
+                   FontSize="15"
+                   HorizontalTextAlignment="Center"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   Margin="32"
+                   InputTransparent="True" />
+            <ActivityIndicator x:Name="Busy"
+                               IsRunning="False"
+                               Color="White"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"
+                               InputTransparent="True" />
+        </Grid>
+
+        <Grid Grid.Row="2"
+              Padding="14,2"
+              ColumnDefinitions="Auto,*"
+              ColumnSpacing="10"
+              BackgroundColor="#1C1C1C">
+            <Label Text="اندازه‌ی علامت"
+                   TextColor="#BDBDBD"
+                   FontSize="13"
+                   VerticalOptions="Center" />
+            <Slider Grid.Column="1"
+                    x:Name="SizeSlider"
+                    Maximum="40"
+                    Minimum="8"
+                    Value="16"
+                    ValueChanged="OnSizeChanged" />
+        </Grid>
+
+        <Grid Grid.Row="3"
+              x:Name="ToolsBar"
+              Padding="8,4,8,12"
+              ColumnDefinitions="*,*,*,*,*,*"
+              ColumnSpacing="6"
+              BackgroundColor="#1C1C1C"
+              IsEnabled="False">
+            <Button Grid.Column="0" Text="↩️&#10;بازگشت" Style="{StaticResource ToolButton}" Clicked="OnUndoClicked" />
+            <Button Grid.Column="1" Text="➖&#10;دور" Style="{StaticResource ToolButton}" Clicked="OnZoomOutClicked" />
+            <Button Grid.Column="2" Text="➕&#10;نزدیک" Style="{StaticResource ToolButton}" Clicked="OnZoomInClicked" />
+            <Button Grid.Column="3" Text="⤢&#10;تمام‌عکس" Style="{StaticResource ToolButton}" Clicked="OnFitClicked" />
+            <Button Grid.Column="4" Text="🗑&#10;پاک‌کردن" Style="{StaticResource ToolButton}" Clicked="OnClearClicked" />
+            <Button Grid.Column="5" Text="💾&#10;خروجی" Style="{StaticResource ToolButton}" Clicked="OnExportClicked" />
+        </Grid>
+    </Grid>
+</ContentPage>
